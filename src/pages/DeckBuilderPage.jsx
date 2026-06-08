@@ -118,6 +118,16 @@ export default function DeckBuilderPage({ onBack }) {
         );
       }
 
+      if (type === "newMain") {
+        filtered = allCards.filter(
+          (c) =>
+            c.is_new === false &&
+            (getCardType(c) === "attack" ||
+             getCardType(c) === "memoria") &&
+            c.is_ace === true
+        );
+      }
+
       if (type === "newTactics") {
         filtered = allCards.filter(
           (c) =>
