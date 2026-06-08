@@ -1,0 +1,21 @@
+.loginPage {
+    height: 100vh;
+  
+    display: flex;
+    flex-direction: column;
+  
+    justify-content: center;
+    align-items: center;
+  
+    gap: 12px;
+  }
+  
+  .loginPage input {
+    width: 250px;
+    padding: 8px;
+  }
+  
+  .loginPage button {
+    width: 150px;
+    padding: 8px;
+  }

@@ -1,0 +1,613 @@
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+}
+/* =========================
+   全体
+========================= */
+.deckBuilder-container {
+    width: 85%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    margin: 0 auto;
+}
+
+  .deckBuilder-layout {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  
+  /* =========================
+     検索エリア
+  ========================= */
+  .deckBuilder-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+  
+  /* =========================
+     横並びレイアウト
+  ========================= */
+  .deckBuilder-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  /* =========================
+     カード一覧（左）
+  ========================= */
+  .deckBuilder-cardList {
+    flex: 1;
+  
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 90px);
+    gap: 6px;
+  
+    padding: 8px;
+    max-height: 75vh;
+    overflow-y: auto;
+  
+    border: 1px solid #ddd;
+    background: #fafafa;
+  
+    align-content: start;
+    box-sizing: border-box;
+  }
+  
+  /* =========================
+     カード本体
+  ========================= */
+  .deckBuilder-cardItem {
+    width: 90px;
+    height: 120px;
+  
+    display: flex;
+    flex-direction: column;
+  
+    overflow: hidden;
+    border: 1px solid #333;
+    border-radius: 6px;
+  
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+  
+  .deckBuilder-cardImage {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-preview-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    z-index: 9999;
+  }
+  
+  .card-preview-image {
+    max-height: 90vh;
+    max-width: 90vw;
+  
+    object-fit: contain;
+  }
+
+  .card-preview-overlay {
+    pointer-events: none;
+  }
+  
+  /* =========================
+     画像（切れ防止・安定）
+  ========================= */
+  .deckBuilder-cardImage {
+    width: 100%;
+    height: 120px;
+  
+    object-fit: cover;
+    display: block;
+  
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* =========================
+     カード名
+  ========================= */
+  .deckBuilder-cardName {
+    font-size: 8px;
+    line-height: 1.1;
+  
+    margin: 0;
+    padding: 2px 4px;
+  
+    height: 30px;
+  
+    text-align: center;
+  
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  
+    background: #fafafa;
+  }
+  
+  /* =========================
+     デッキエリア（右）
+  ========================= */
+  .deck-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .deck-section h4 {
+    width: 100%;
+    margin: 0 0 6px 0;
+  }
+
+  .deck-card-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+    .deckBuilder-deckEditor {
+    flex: 1;
+    min-width: 360px;
+
+    max-height: 75vh;
+    overflow-y: auto;
+
+    border: 1px solid #ddd;
+    background: #fff;
+
+    padding: 10px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column; /* ←ここ重要 */
+    gap: 12px;
+    }
+    
+    .deck-main-item {
+        width: 90px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .deck-count {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+  /* =========================
+     デッキカード
+  ========================= */
+  .deckBuilder-deckCard {
+    width: 90px;
+    height: 120px;
+  
+    display: flex;
+    flex-direction: column;
+  
+    overflow: hidden;
+    border: 1px solid #333;
+    border-radius: 6px;
+  
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+  
+  .deckBuilder-deckImage {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .deck-save-area {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .deck-name-input {
+    flex: 1;
+    padding: 6px;
+  }
+
+  .deck-load-area {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+  }
+  
+  .deck-load-area select {
+    flex: 1;
+    padding: 6px;
+  }
+/* =========================
+   デッキリスト
+========================= */
+
+.deckList-overlay {
+    position: fixed;
+    inset: 0;
+  
+    background: rgba(0, 0, 0, 0.8);
+  
+    z-index: 99999;
+  
+    overflow: auto;
+  }
+  
+  .deckList-modal {
+    background: white;
+  
+    width: 50vw;
+    height: 55vh;
+  
+    margin: 3vh auto;
+    padding: 1vw;
+  
+    overflow-y: auto;
+  
+    font-size: 0.9vw;
+  }
+  
+  /* =========================
+     見出し
+  ========================= */
+  
+  .deckList-modal h1 {
+    font-size: 1.4vw;
+    margin: 0 0 0.5vw 0;
+  
+    text-align: left;
+  }
+  
+  .deckList-modal h2 {
+    font-size: 1vw;
+    margin: 0 0 1vw 0;
+  
+    text-align: left;
+  }
+  
+  .deckList-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 1vw;
+  }
+  
+  .deckList-left {
+    flex: 1;
+    min-width: 0;
+  
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .deckList-leaderArea {
+    margin-bottom: 1vw;
+  }
+  
+  
+  .deckList-leaders {
+    display: flex;
+    gap: 0.5vw;
+  }
+  
+  .deckList-leaderCard {
+    width: 4.5vw;
+    min-width: 60px;
+  
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .deckList-main {
+    width: 100%;
+  }
+  
+  .deckList-main h1 {
+    margin-top: 0;
+  }
+  
+  .deckList-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4vw;
+  }
+  
+  .deckList-cardItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .deckList-card {
+    width: 4vw;
+    min-width: 55px;
+  
+    height: auto;
+    object-fit: contain;
+  }
+  
+  .deckList-count {
+    font-size: 0.9vw;
+    font-weight: bold;
+  }
+  
+  .deckList-tactics {
+    width: 8vw;
+    min-width: 100px;
+  
+    margin-left: auto;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5vw;
+  
+    flex-shrink: 0;
+  }
+  
+  .deckList-tactics h1 {
+    margin: 0 0 0.5vw 0;
+  }
+  
+  .deckList-tacticsCard {
+    width: 6vw;
+    min-width: 85px;
+  
+    height: auto;
+    object-fit: contain;
+  }
+  /* =========================
+   ボタン共通
+   カードゲームアプリ風
+========================= */
+
+button {
+    min-width: 90px;
+    padding: 0.7em 1.2em;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #4f8cff,
+        #6b4fff
+    );
+
+    color: #fff;
+    font-weight: bold;
+    font-size: clamp(12px, 0.8vw, 16px);
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 12px rgba(79,140,255,0.35),
+        0 4px 10px rgba(0,0,0,0.2);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        filter 0.15s ease;
+}
+
+/* ホバー */
+
+button:hover {
+    color: #4f8cff !important;
+
+    background: linear-gradient(
+        135deg,
+        white,
+        white
+    ) !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 18px rgba(79,140,255,0.5),
+        0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* クリック */
+
+button:active {
+    transform: translateY(0);
+
+    box-shadow:
+        0 0 8px rgba(79,140,255,0.3),
+        0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   戻るボタン
+========================= */
+
+.back-button {
+    background: linear-gradient(
+        135deg,
+        #606060,
+        #303030
+    );
+
+    color: white;
+
+    box-shadow:
+        0 0 12px rgba(0,0,0,0.35),
+        0 4px 10px rgba(0,0,0,0.2);
+}
+
+.back-button:hover {
+    background: linear-gradient(
+        135deg,
+        #707070,
+        #404040
+    );
+
+    color: white;
+}
+
+/* =========================
+   検索ボタン
+========================= */
+
+.deckBuilder-search button {
+    background: linear-gradient(
+        135deg,
+        #4f8cff,
+        #6b4fff
+    );
+
+    box-shadow:
+        0 0 12px rgba(79,140,255,0.4),
+        0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   保存ボタン
+========================= */
+
+.deck-save-area button {
+    background: linear-gradient(
+        135deg,
+        #24d16f,
+        #119c4a
+    );
+
+    box-shadow:
+        0 0 12px rgba(36,209,111,0.4),
+        0 4px 10px rgba(0,0,0,0.2);
+}
+
+.deck-save-area button:hover {
+    box-shadow:
+        0 0 18px rgba(36,209,111,0.6),
+        0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   読込ボタン
+========================= */
+
+.deck-load-area button {
+    background: linear-gradient(
+        135deg,
+        #ffb347,
+        #ff7b00
+    );
+
+    box-shadow:
+        0 0 12px rgba(255,179,71,0.4),
+        0 4px 10px rgba(0,0,0,0.2);
+}
+
+.deck-load-area button:hover {
+    box-shadow:
+        0 0 18px rgba(255,179,71,0.6),
+        0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   枚数調整ボタン (+ / -)
+========================= */
+
+.deck-count button {
+    min-width: 32px;
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #ff5f6d,
+        #ffc371
+    );
+
+    font-size: 16px;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 10px rgba(255,95,109,0.4),
+        0 3px 8px rgba(0,0,0,0.2);
+}
+
+.deck-count button:hover {
+    box-shadow:
+        0 0 16px rgba(255,95,109,0.6),
+        0 5px 12px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   セレクトボックス
+========================= */
+
+.deck-load-area select {
+    border: 1px solid #4f8cff;
+    border-radius: 10px;
+
+    padding: 8px 12px;
+
+    background: #fff;
+    color: #333;
+
+    font-size: clamp(12px, 0.8vw, 16px);
+}
+
+/* =========================
+   デッキ名入力欄
+========================= */
+
+.deck-name-input {
+    border: 1px solid #4f8cff;
+    border-radius: 10px;
+
+    padding: 8px 12px;
+
+    font-size: clamp(12px, 0.8vw, 16px);
+
+    outline: none;
+}
+
+.deck-name-input:focus {
+    border-color: #6b4fff;
+
+    box-shadow:
+        0 0 10px rgba(79,140,255,0.3);
+}
+  /* =========================
+     保険（暴走img対策）
+  ========================= */
+  img {
+    max-width: 100%;
+    height: auto;
+  }

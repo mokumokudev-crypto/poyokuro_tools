@@ -1,0 +1,384 @@
+body {
+  margin: 0;
+  padding: 16px;
+  background: #f4f4f9;
+  font-family: Meiryo, sans-serif;
+  color: #333;
+}
+
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+/* =========================
+   共通セクション
+========================= */
+
+.section {
+  background: white;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   デッキ取得
+========================= */
+
+.deck-load-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.deck-load-area input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.deck-load-area button {
+  padding: 8px 16px;
+}
+
+/* =========================
+   カードシステム（統一）
+========================= */
+
+/* 全エリア共通 */
+.card-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+/* カード本体 */
+.card {
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid #999;
+  flex-shrink: 0;
+}
+
+/* サイズ管理（完全統一） */
+.card.small {
+  width: 60px;
+  height: 80px;
+}
+
+.card.normal {
+  width: 90px;
+  height: 120px;
+}
+
+.card.large {
+  width: 120px;
+  height: 170px;
+}
+
+/* 回転（タクティクス用） */
+.card.rotated {
+  transform: rotate(90deg);
+}
+
+/* =========================
+   Leader
+========================= */
+
+.leader-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.leader-block {
+  width: 48%;
+}
+
+.leader-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.leader-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+
+.leader-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.leader-img {
+  width: 120px;
+  display: block;
+}
+
+/* HPを画像の上に表示 */
+.leader-hp-overlay {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  color: red;
+  font-size: 32px;
+  font-weight: bold;
+
+  text-shadow:
+    -1px -1px 0 white,
+     1px -1px 0 white,
+    -1px  1px 0 white,
+     1px  1px 0 white,
+     0 0 5px white;
+}
+
+.leader-down {
+  color: red;
+  font-weight: bold;
+}
+
+/* ボタン中央揃え */
+.leader-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.leader-buttons button {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+  line-height: 1;
+  padding: 0;
+}
+
+/* =========================
+   プレイエリア
+========================= */
+.play-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.play-toolbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.play-toolbar-left button {
+  width: 140px;
+}
+
+.play-toolbar-right button {
+  width: 140px;
+}
+
+.play-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.play-left-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 140px;
+}
+
+.play-center {
+  flex: 1;
+}
+
+.play-right-buttons {
+  width: 140px;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 1200px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-card {
+  width: 90px;
+}
+/* =========================
+   手札＋山札
+========================= */
+
+.hand-row {
+  display: flex;
+  gap: 24px;
+}
+
+.hand-column {
+  flex: 1;
+}
+
+.deck-column {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.deck-card {
+  width: 90px;
+  height: 120px;
+  border: 2px solid #999;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.deck-count {
+  margin-bottom: 10px;
+}
+
+.deck-column button {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* =========================
+   tactics
+========================= */
+/* プレイエリアと同じ「親幅」にする */
+.tactics-container {
+  display: flex;
+  gap: 16px;              /* エリア間の隙間 */
+  width: 100%;            /* プレイエリアと同じコンテナ幅を想定 */
+  box-sizing: border-box;
+}
+
+/* 2つのエリアを「同じ幅」にする */
+.tactics-area {
+  flex: 1;                /* ← これで左右同じ幅になる */
+  min-height: 180px;
+  border: 1px solid #aaa;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f8f8f8;
+  box-sizing: border-box;
+}
+
+
+/* カードはこの中で並ぶ */
+.tactics-cards {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+
+/* =========================
+   PP
+========================= */
+
+.pp-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pp-area h3 {
+  margin: 0;
+  min-width: 60px;
+}
+
+/* =========================
+   ボタン
+========================= */
+
+.tab-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.tab-buttons button {
+  background: linear-gradient(
+      135deg,
+      #8b5cf6,
+      #4f46e5
+  );
+
+  color: white !important;
+
+  box-shadow:
+      0 0 12px rgba(139,92,246,0.4),
+      0 4px 10px rgba(0,0,0,0.2);
+}
+
+.tab-buttons button:hover {
+  background: linear-gradient(
+      135deg,
+      #9d6dff,
+      #5f56ff
+  );
+
+  color: white !important;
+}
+
+/* =========================
+   スマホ
+========================= */
+
+@media (max-width: 900px) {
+  .hand-row {
+    flex-direction: column;
+  }
+
+  .deck-column {
+    width: 100%;
+  }
+
+  .deck-column button {
+    width: 200px;
+  }
+}
