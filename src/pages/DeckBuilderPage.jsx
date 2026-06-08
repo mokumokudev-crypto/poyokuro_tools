@@ -121,7 +121,7 @@ export default function DeckBuilderPage({ onBack }) {
       if (type === "newMain") {
         filtered = allCards.filter(
           (c) =>
-            c.is_new === false &&
+            c.is_new === true &&
             (getCardType(c) === "attack" ||
              getCardType(c) === "memoria") &&
             c.is_ace === true
