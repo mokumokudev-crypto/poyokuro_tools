@@ -351,6 +351,62 @@ const localCards = [
         is_local: true,
         is_new: true,
       },
+      {
+        id: "n25",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/aria_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n26",
+        name: "あああ6",
+        image_url: `${import.meta.env.BASE_URL}cards/aria_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n27",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/voka_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n28",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/voka_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
   ];
   
   export default localCards;

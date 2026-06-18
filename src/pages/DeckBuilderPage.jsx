@@ -124,7 +124,7 @@ export default function DeckBuilderPage({ onBack }) {
             c.is_new === true &&
             (getCardType(c) === "attack" ||
              getCardType(c) === "memoria") &&
-            c.is_ace === true
+            c.is_ace === false
         );
       }
 
