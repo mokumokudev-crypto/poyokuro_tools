@@ -430,16 +430,7 @@ useEffect(() => {
         "ja"
       );
     });
-  
-    useEffect(() => {
-        const savedCards = JSON.parse(
-          localStorage.getItem("allCards") || "[]"
-        );
-      
-        if (savedCards.length > 0) {
-          setCards(savedCards);
-        }
-      }, []);
+
     return grouped;
   };
   return (
@@ -531,7 +522,6 @@ useEffect(() => {
             <div key={index} className="deckBuilder-cardItem">
             <img
                 loading="lazy"
-                decoding="async"
                 src={card.image_url}
                 alt={card.name}
                 className="deckBuilder-cardImage"
