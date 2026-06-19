@@ -11,6 +11,9 @@ export default function DeckBuilderPage({ onBack }) {
   const [savedDecks, setSavedDecks] = useState(
     JSON.parse(localStorage.getItem("savedDecks") || "[]")
   );
+  const [bgColor, setBgColor] = useState(
+    localStorage.getItem("bgColor") || "#ffffff"
+  );
   
   const [selectedDeck, setSelectedDeck] = useState("");
   const [showDeckList, setShowDeckList] = useState(false);
@@ -34,9 +37,32 @@ export default function DeckBuilderPage({ onBack }) {
     tactics: [],
   });
 
+  const getTextColor = (hex) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+  
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+  
+    return brightness < 128 ? "#ffffff" : "#000000";
+  };
+  
+  const textColor = getTextColor(bgColor);
+
   const GAS_URL =
     "https://script.google.com/macros/s/AKfycbwYOkMSRnZSLozkLdgDK24qSZcyxuQnbYOiIGr4rvOeYY2fLCrLZIqzx3-vkqVtcvq5bg/exec";
-
+    useEffect(() => {
+        document.body.style.backgroundColor = bgColor;
+      
+        localStorage.setItem("bgColor", bgColor);
+      
+        return () => {
+          document.body.style.backgroundColor = "";
+        };
+      }, [bgColor]);
+      useEffect(() => {
+        localStorage.setItem("bgColor", bgColor);
+      }, [bgColor]);
 // =========================
 // カードキャッシュ
 // =========================
@@ -434,7 +460,14 @@ useEffect(() => {
     return grouped;
   };
   return (
-    <div className="deckBuilder-container">
+    <div
+        className="deckBuilder-container"
+        style={{
+            backgroundColor: bgColor,
+            color: textColor,
+            minHeight: "100vh"
+        }}
+    >
       <h1>デッキメーカー</h1>
 
       <p>
@@ -450,7 +483,16 @@ useEffect(() => {
             ).toLocaleString("ja-JP")
             : "未取得"
         }
+        <label>
+        {"　　"}背景色変更：
+        <input
+            type="color"
+            value={bgColor}
+            onChange={(e) => setBgColor(e.target.value)}
+        />
+        </label>
         </p>
+
         <button 
             onClick={async () => {
                 const res = await fetch(`${GAS_URL}?query=`);
