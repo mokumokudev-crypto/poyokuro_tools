@@ -581,6 +581,15 @@ useEffect(() => {
                 alt={card.name}
                 className="deckBuilder-cardImage"
                 onClick={() => addToDeck(card)}
+
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                
+                    for (let i = 0; i < 4; i++) {
+                      addToDeck(card);
+                    }
+                }}
+
                 onMouseDown={() => startPress(card)}
                 onMouseUp={endPress}
                 onMouseLeave={endPress}

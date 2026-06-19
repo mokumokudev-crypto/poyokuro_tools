@@ -8,7 +8,7 @@ import PlayerBoard from "./components/PlayerBoard";
 import OpponentBoard from "./components/OpponentBoard";
 
 const GAS_URL =
-  "https://script.google.com/macros/s/AKfycbzgCuCh5jXOemCWa6ZFB-m4wOIm2VxUNk6jBPGVm5jh_8EYDKFWCe4EzwP4eD_Jeo-zow/exec";
+"https://script.google.com/macros/s/AKfycbwYOkMSRnZSLozkLdgDK24qSZcyxuQnbYOiIGr4rvOeYY2fLCrLZIqzx3-vkqVtcvq5bg/exec";
 
 function App() {
   const [page, setPage] = useState("solo");
