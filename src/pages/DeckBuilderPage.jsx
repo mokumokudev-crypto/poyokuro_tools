@@ -154,7 +154,7 @@ useEffect(() => {
             (getCardType(c) === "attack" ||
               getCardType(c) === "memoria") &&
             !c.is_ace &&
-            !c.build_rule
+            c.build_rule?.type != "require_leader"
         );
       }
   
@@ -225,7 +225,7 @@ useEffect(() => {
               (getCardType(c) === "attack" ||
                 getCardType(c) === "memoria") &&
               !c.is_ace &&
-              !c.build_rule
+              c.build_rule?.type != "require_leader"
           );
       }
 
