@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import localCards from "../data/localCards";
 import "./DeckBuilderPage.css";
 
@@ -37,6 +37,71 @@ export default function DeckBuilderPage({ onBack }) {
   const GAS_URL =
     "https://script.google.com/macros/s/AKfycbwYOkMSRnZSLozkLdgDK24qSZcyxuQnbYOiIGr4rvOeYY2fLCrLZIqzx3-vkqVtcvq5bg/exec";
 
+// =========================
+// カードキャッシュ
+// =========================
+useEffect(() => {
+    const loadCards = async () => {
+      try {
+        const savedCards = JSON.parse(
+          localStorage.getItem("allCards") || "[]"
+        );
+  
+        const lastUpdate =
+          Number(localStorage.getItem("allCardsUpdatedAt")) || 0;
+  
+        const now = Date.now();
+  
+        // 24時間
+        const ONE_DAY = 24 * 60 * 60 * 1000;
+  
+        // キャッシュが存在し24時間以内
+        if (
+          savedCards.length > 0 &&
+          now - lastUpdate < ONE_DAY
+        ) {
+          console.log(
+            "localStorageからカード読込",
+            savedCards.length
+          );
+  
+          return;
+        }
+  
+        console.log("GASからカード再取得");
+  
+        const res = await fetch(`${GAS_URL}?query=`);
+        const data = await res.json();
+  
+        const gasCards = data.cards || [];
+  
+        const allCards = [
+          ...gasCards,
+          ...localCards
+        ];
+  
+        localStorage.setItem(
+          "allCards",
+          JSON.stringify(allCards)
+        );
+  
+        localStorage.setItem(
+          "allCardsUpdatedAt",
+          String(now)
+        );
+  
+        console.log(
+          "カード保存完了",
+          allCards.length
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    };
+  
+    loadCards();
+  }, []);
+
   // =========================
   // カード取得
   // =========================
@@ -49,19 +114,13 @@ export default function DeckBuilderPage({ onBack }) {
     setCards([]); 
   
     try {
-      const res = await fetch(
-        `${GAS_URL}?query=${encodeURIComponent(keyword)}`
-      );
-  
-      const data = await res.json();
-  
-      const gasCards = data.cards || [];
-  
       // =========================
       // マージ
       // =========================
-      const allCards = [...gasCards, ...localCards];
-  
+      const allCards = JSON.parse(
+        localStorage.getItem("allCards") || "[]"
+      );
+
       let filtered = allCards;
   
       if (type === "leader") {
@@ -76,6 +135,26 @@ export default function DeckBuilderPage({ onBack }) {
             (getCardType(c) === "attack" ||
               getCardType(c) === "memoria") &&
             !c.is_ace
+        );
+      }
+
+      if (type === "leaderMain") {
+        filtered = allCards.filter(
+          (c) =>
+            (getCardType(c) === "attack" ||
+              getCardType(c) === "memoria") &&
+            !c.is_ace &&
+            c.build_rule?.type === "require_leader"
+        );
+      }
+
+      if (type === "neutral") {
+        filtered = allCards.filter(
+          (c) =>
+            (getCardType(c) === "attack" ||
+              getCardType(c) === "memoria") &&
+            !c.is_ace &&
+            !c.build_rule
         );
       }
   
@@ -128,6 +207,28 @@ export default function DeckBuilderPage({ onBack }) {
         );
       }
 
+      if (type === "newLeaderMain") {
+        filtered = allCards.filter(
+            (c) =>
+              c.is_new === true &&
+              (getCardType(c) === "attack" ||
+                getCardType(c) === "memoria") &&
+              !c.is_ace &&
+              c.build_rule?.type === "require_leader"
+          );
+      }
+
+      if (type === "newNeutral") {
+        filtered = allCards.filter(
+            (c) =>
+              c.is_new === true &&
+              (getCardType(c) === "attack" ||
+                getCardType(c) === "memoria") &&
+              !c.is_ace &&
+              !c.build_rule
+          );
+      }
+
       if (type === "newTactics") {
         filtered = allCards.filter(
           (c) =>
@@ -169,7 +270,7 @@ export default function DeckBuilderPage({ onBack }) {
 
     const attackCount = deck.main.filter(
         (c) => getCardType(c) === "attack"
-      ).length;
+    ).length;
       
     const memoriaCount = deck.main.filter(
         (c) => getCardType(c) === "memoria"
@@ -260,6 +361,7 @@ export default function DeckBuilderPage({ onBack }) {
   // =========================
   // デッキ読み込み
   // =========================
+
   const loadDeck = () => {
     if (!selectedDeck) {
       alert("デッキを選択してください");
@@ -329,14 +431,63 @@ export default function DeckBuilderPage({ onBack }) {
       );
     });
   
+    useEffect(() => {
+        const savedCards = JSON.parse(
+          localStorage.getItem("allCards") || "[]"
+        );
+      
+        if (savedCards.length > 0) {
+          setCards(savedCards);
+        }
+      }, []);
     return grouped;
   };
   return (
     <div className="deckBuilder-container">
       <h1>デッキメーカー</h1>
 
-      <button onClick={onBack} className="back-button">一人回しへ戻る</button>
+      <p>
+        最終カード一覧更新：
+        {
+        localStorage.getItem("allCardsUpdatedAt")
+            ? new Date(
+                Number(
+                localStorage.getItem(
+                    "allCardsUpdatedAt"
+                )
+                )
+            ).toLocaleString("ja-JP")
+            : "未取得"
+        }
+        </p>
+        <button 
+            onClick={async () => {
+                const res = await fetch(`${GAS_URL}?query=`);
+                const data = await res.json();
 
+                const allCards = [
+                ...(data.cards || []),
+                ...localCards
+                ];
+
+                localStorage.setItem(
+                "allCards",
+                JSON.stringify(allCards)
+                );
+
+                localStorage.setItem(
+                "allCardsUpdatedAt",
+                String(Date.now())
+                );
+
+                setCards(allCards);
+
+                alert("カードデータ更新完了");
+            }}
+            >
+            カード更新
+            </button>
+            <button onClick={onBack} className="back-button">一人回しへ戻る</button>
       {/* =========================
           検索
       ========================= */}
@@ -350,12 +501,16 @@ export default function DeckBuilderPage({ onBack }) {
         <button onClick={() => fetchCards("")}>全カード</button>
         <button onClick={() => fetchCards("leader")}>リーダー</button>
         <button onClick={() => fetchCards("ace")}>エース</button>
+        <button onClick={() => fetchCards("leaderMain")}>リーダー専用</button>
+        <button onClick={() => fetchCards("neutral")}>ニュートラル</button>
         <button onClick={() => fetchCards("main")}>メイン</button>
         <button onClick={() => fetchCards("tactics")}>タクティクス</button>
 
         <button onClick={() => fetchCards("new")}>新カード全</button>
         <button onClick={() => fetchCards("newLeader")}>新リーダー</button>
         <button onClick={() => fetchCards("newAce")}>新エース</button>
+        <button onClick={() => fetchCards("newLeaderMain")}>新リーダー専用</button>
+        <button onClick={() => fetchCards("newNeutral")}>新ニュートラル</button>
         <button onClick={() => fetchCards("newMain")}>新メイン</button>
         <button onClick={() => fetchCards("newTactics")}>新タクティクス</button>
       </div>
@@ -375,6 +530,8 @@ export default function DeckBuilderPage({ onBack }) {
         {filteredCards.map((card, index) => (
             <div key={index} className="deckBuilder-cardItem">
             <img
+                loading="lazy"
+                decoding="async"
                 src={card.image_url}
                 alt={card.name}
                 className="deckBuilder-cardImage"
@@ -402,7 +559,7 @@ export default function DeckBuilderPage({ onBack }) {
             <h4>リーダー</h4>
 
             {deck.leader.map((card, i) => (
-              <div key={i} onClick={() => removeFromDeck("leader", i)}>
+              <div key={i} onClick={() => removeFromDeck("leader", i)} className="deck-main-item">
                 <img 
                   src={card.image_url} 
                   className="deckBuilder-deckImage" 
@@ -418,11 +575,12 @@ export default function DeckBuilderPage({ onBack }) {
 
           {/* Main */}
           <div className="deck-section">
-            <h4>メイン   {deck.main.length}枚 
-                       Attack: {attackCount}
-                       {" "}
-                    Memoria: {memoriaCount}
-                    </h4>
+            <h4>メイン   
+                {deck.main.length}枚 
+                Attack: {attackCount}
+                {" "}
+                Memoria: {memoriaCount}
+            </h4>
 
             {getGroupedMain().map(({ card, count }) => (
               <div key={card.id} className="deck-main-item">
@@ -451,7 +609,7 @@ export default function DeckBuilderPage({ onBack }) {
                     −
                   </button>
 
-                  <span>{count}</span>
+                  <span className="deck-count-number">{count}</span>
 
                   <button
                     onClick={() => {
