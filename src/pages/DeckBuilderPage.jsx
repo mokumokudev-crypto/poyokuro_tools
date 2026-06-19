@@ -63,6 +63,15 @@ export default function DeckBuilderPage({ onBack }) {
       useEffect(() => {
         localStorage.setItem("bgColor", bgColor);
       }, [bgColor]);
+      useEffect(() => {
+        document.body.style.backgroundColor = bgColor;
+        document.body.style.color = textColor;
+      
+        return () => {
+          document.body.style.backgroundColor = "";
+          document.body.style.color = "";
+        };
+      }, [bgColor, textColor]);
 // =========================
 // カードキャッシュ
 // =========================
@@ -468,7 +477,7 @@ useEffect(() => {
             minHeight: "100vh"
         }}
     >
-      <h1>デッキメーカー</h1>
+      <h1 style={{ color: textColor }}>デッキメーカー</h1>
 
       <p>
         最終カード一覧更新：
@@ -553,7 +562,11 @@ useEffect(() => {
       ========================= */}
       <div className="deckBuilder-layout">
 
-      <div className="deckBuilder-cardList">
+      <div className="deckBuilder-cardList"
+      style={{
+        backgroundColor: bgColor,
+        color: textColor
+      }}>
         {loading && <p>読み込み中...</p>}
 
         {!loading && filteredCards.length === 0 && (
@@ -584,7 +597,11 @@ useEffect(() => {
         {/* =========================
             デッキ
         ========================= */}
-        <div className="deckBuilder-deckEditor">
+        <div className="deckBuilder-deckEditor"
+        style={{
+            backgroundColor: bgColor,
+            color: textColor
+          }}>
 
           {/* Leader */}
           <div className="deck-section">
@@ -740,7 +757,10 @@ useEffect(() => {
                 <div
                 className="deckList-modal"
                 onClick={(e) => e.stopPropagation()}
-                >
+                style={{
+                    backgroundColor: bgColor,
+                    color: textColor
+                  }}>
                 <div className="deckList-content">
 
                     {/* 左側 */}
