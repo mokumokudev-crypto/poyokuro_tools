@@ -353,6 +353,25 @@ const localCards = [
       },
       {
         id: "n25",
+        name: "あああ6",
+        image_url: `${import.meta.env.BASE_URL}cards/aria_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n26",
         name: "あああ",
         image_url: `${import.meta.env.BASE_URL}cards/aria_m.png`,
     
@@ -360,19 +379,10 @@ const localCards = [
           internal_id: "memoria",
           display_name: "メモリア",
         },
-    
-        is_ace: false,
-        is_local: true,
-        is_new: true,
-      },
-      {
-        id: "n26",
-        name: "あああ6",
-        image_url: `${import.meta.env.BASE_URL}cards/aria_at.png`,
-    
-        card_type: {
-          internal_id: "attack",
-          display_name: "アタック",
+
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
         },
     
         is_ace: false,
@@ -389,6 +399,11 @@ const localCards = [
           display_name: "アタック",
         },
     
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
         is_ace: false,
         is_local: true,
         is_new: true,
@@ -403,6 +418,467 @@ const localCards = [
           display_name: "メモリア",
         },
     
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n29",
+        name: "いいい",
+        image_url: `${import.meta.env.BASE_URL}cards/obo_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n30",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/obo_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n31",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/uhi_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n32",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/uhi_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n33",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/saine_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n34",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/saine_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n35",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/inui_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n36",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/inui_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n37",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/raizin_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n38",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/raizin_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n39",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/akari_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n40",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/akari_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n41",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/mother_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n42",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/mother_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n43",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/kurom_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n44",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/kurom_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n45",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/toko_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n46",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/toko_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n47",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/chise_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n48",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/chise_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n49",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/tentei_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n50",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/tentei_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n51",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/zyasu_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n52",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/zyasu_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
         is_ace: false,
         is_local: true,
         is_new: true,

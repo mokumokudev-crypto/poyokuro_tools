@@ -74,26 +74,28 @@ export default function BoardArea({
           </div>
 
           <div className="deck-column">
-            <div className="deck-card">
-              山札
-            </div>
 
-            <div className="deck-count">
-              残り {deck.length} 枚
+            <div className="deck-card" onClick={drawCard}>
+                <img
+                src={`${import.meta.env.BASE_URL}cards/deckImage.png`}
+                alt="山札"
+                className="deck-image"
+                />
+
+                <div className="deck-card-count">
+                {deck.length}
+                </div>
             </div>
 
             <button onClick={drawStartingHand}>
-              初手5枚
-            </button>
-
-            <button onClick={drawCard}>
-              ドロー
+                初手5枚
             </button>
 
             <button onClick={resetGame}>
-              リセット
+                リセット
             </button>
-          </div>
+
+            </div>
 
         </div>
       </div>

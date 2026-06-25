@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DeckBuilderPage from "./pages/DeckBuilderPage";
 
 import "./App.css";
@@ -14,8 +14,11 @@ function App() {
   const [page, setPage] = useState("solo");
   const [activeTab, setActiveTab] = useState("player");
 
-  const [playerDeckCode, setPlayerDeckCode] = useState("");
-  const [opponentDeckCode, setOpponentDeckCode] = useState("");
+  const [bgColor, setBgColor] = useState(
+    localStorage.getItem("bgColor") || "#ffffff"
+  );
+
+  const [deckCode, setDeckCode] = useState("");
 
   const [playerDeckData, setPlayerDeckData] = useState(null);
   const [opponentDeckData, setOpponentDeckData] = useState(null);
@@ -44,6 +47,26 @@ function App() {
   const [opponentTrashHistory,setOpponentTrashHistory] = useState([]);
   const [opponentTurn,setOpponentTurn] = useState(1);
 
+  const getTextColor = (hex) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+  
+    const brightness =
+      (r * 299 + g * 587 + b * 114) / 1000;
+  
+    return brightness < 128
+      ? "#ffffff"
+      : "#000000";
+  };
+  
+  const textColor = getTextColor(bgColor);
+  useEffect(() => {
+    document.body.style.backgroundColor = bgColor;
+    document.documentElement.style.backgroundColor = bgColor;
+  
+    document.body.style.color = textColor;
+  }, [bgColor, textColor]);
 
   const [authenticated, setAuthenticated] =
     useState(
@@ -69,30 +92,64 @@ function App() {
     return { leaders, tactics, deck };
   };
 
+  const [savedDecks, setSavedDecks] = useState(
+    JSON.parse(
+      localStorage.getItem("savedDecks") || "[]"
+    )
+  );
+
+  const [deckHistory, setDeckHistory] = useState(
+    JSON.parse(
+      localStorage.getItem("deckHistory") || "[]"
+    )
+  );
+  
+  const saveDeckHistory = (code) => {
+    if (!code.trim()) return;
+  
+    const updated = [
+      code,
+      ...deckHistory.filter((c) => c !== code),
+    ].slice(0, 5); // 最新5件だけ
+  
+    setDeckHistory(updated);
+  
+    localStorage.setItem(
+      "deckHistory",
+      JSON.stringify(updated)
+    );
+  };
+
+  const [selectedDeck, setSelectedDeck] = useState("");
   const loadPlayerDeck = async () => {
+    saveDeckHistory(deckCode);
 
     const res = await fetch(
-      `${GAS_URL}?deckCode=${playerDeckCode}`
+      `${GAS_URL}?deckCode=${deckCode}`
     );
-
+  
     const data = normalizeData(await res.json());
-
+  
     setPlayerDeckData(data);
     setPlayerDeck(
       [...data.deck].sort(() => Math.random() - 0.5)
     );
     setPlayerTacticsDeck(data.tactics);
-
+  
     setPlayerHand([]);
     setPlayerPlayArea([]);
     setPlayerTrashArea([]);
     setPlayerTacticsArea([]);
     setPlayerPP(0);
+    setPlayerTurn(1);
+    setPlayerTrashHistory([]);
   };
 
   const loadOpponentDeck = async () => {
+    saveDeckHistory(deckCode);
+
     const res = await fetch(
-      `${GAS_URL}?deckCode=${opponentDeckCode}`
+      `${GAS_URL}?deckCode=${deckCode}`
     );
 
     const data = normalizeData(await res.json());
@@ -108,6 +165,82 @@ function App() {
     setOpponentTrashArea([]);
     setOpponentTacticsArea([]);
     setOpponentPP(0);
+    setOpponentTurn(1);
+    setOpponentTrashHistory([]);
+  };
+
+  const loadSavedPlayerDeck = () => {
+    const target = savedDecks.find(
+      (d) => d.name === selectedDeck
+    );
+  
+    if (!target) {
+      alert("デッキを選択してください");
+      return;
+    }
+  
+    const loaded = target.deck;
+  
+    setPlayerDeck(
+      [...loaded.main].sort(
+        () => Math.random() - 0.5
+      )
+    );
+  
+    setPlayerTacticsDeck(
+      [...loaded.tactics]
+    );
+  
+    setPlayerDeckData({
+      leaders: loaded.leader,
+      tactics: loaded.tactics,
+      deck: loaded.main,
+    });
+  
+    setPlayerHand([]);
+    setPlayerPlayArea([]);
+    setPlayerTrashArea([]);
+    setPlayerTacticsArea([]);
+    setPlayerPP(0);
+    setPlayerTurn(1);
+    setPlayerTrashHistory([]);
+  };
+
+  const loadSavedOpponentDeck = () => {
+    const target = savedDecks.find(
+      (d) => d.name === selectedDeck
+    );
+  
+    if (!target) {
+      alert("デッキを選択してください");
+      return;
+    }
+  
+    const loaded = target.deck;
+  
+    setOpponentDeck(
+      [...loaded.main].sort(
+        () => Math.random() - 0.5
+      )
+    );
+  
+    setOpponentTacticsDeck(
+      [...loaded.tactics]
+    );
+  
+    setOpponentDeckData({
+      leaders: loaded.leader,
+      tactics: loaded.tactics,
+      deck: loaded.main,
+    });
+  
+    setOpponentHand([]);
+    setOpponentPlayArea([]);
+    setOpponentTrashArea([]);
+    setOpponentTacticsArea([]);
+    setOpponentPP(0);
+    setOpponentTurn(1);
+    setOpponentTrashHistory([]);
   };
 
   const playerDrawStartingHand = () => {
@@ -361,6 +494,7 @@ function App() {
     return (
       <LoginPage
         gasUrl={GAS_URL}
+        bgColor={bgColor}
         onLogin={() =>
           setAuthenticated(true)
         }
@@ -369,8 +503,28 @@ function App() {
   }
   return (
     
-    <div className="app-container">
-      <h1>クロススターズ 一人回しツール</h1>
+    <div 
+      className="app-container"
+      style={{
+        minHeight: "100vh",
+        padding: "16px",
+        boxSizing: "border-box",
+    }}>
+      <h1 style={{ color: textColor }}>クロススターズ 一人回しツール</h1>
+      <p>
+        背景色変更：
+        <input
+          type="color"
+          value={bgColor}
+          onChange={(e) => {
+            setBgColor(e.target.value);
+            localStorage.setItem(
+              "bgColor",
+              e.target.value
+            );
+          }}
+        />
+      </p>
       <div className="menu-buttons">
 
         <button
@@ -382,30 +536,57 @@ function App() {
       
 
       <div className="deck-load-area">
-        <input
-          value={playerDeckCode}
-          onChange={(e) =>
-            setPlayerDeckCode(e.target.value)
-          }
-          placeholder="自分デッキコード"
-        />
+      <input
+        list="deck-history"
+        value={deckCode}
+        onChange={(e) =>
+          setDeckCode(e.target.value)
+        }
+        placeholder="デッキコード"
+      />
+
+      <datalist id="deck-history">
+        {deckHistory.map((code) => (
+          <option key={code} value={code} />
+        ))}
+      </datalist>
 
         <button onClick={loadPlayerDeck}>
-          自分デッキ読込
+          自分読込
+        </button>
+
+        <button onClick={loadOpponentDeck}>
+          相手読込
         </button>
       </div>
 
       <div className="deck-load-area">
-        <input
-          value={opponentDeckCode}
+        <select
+          value={selectedDeck}
           onChange={(e) =>
-            setOpponentDeckCode(e.target.value)
+            setSelectedDeck(e.target.value)
           }
-          placeholder="相手デッキコード"
-        />
+        >
+          <option value="">
+            保存済みデッキ
+          </option>
 
-        <button onClick={loadOpponentDeck}>
-          相手デッキ読込
+          {savedDecks.map((d) => (
+            <option
+              key={d.name}
+              value={d.name}
+            >
+              {d.name}
+            </option>
+          ))}
+        </select>
+
+        <button onClick={loadSavedPlayerDeck}>
+          自分読込
+        </button>
+
+        <button onClick={loadSavedOpponentDeck}>
+          相手読込
         </button>
       </div>
 
