@@ -429,8 +429,8 @@ const localCards = [
       },
       {
         id: "n29",
-        name: "いいい",
-        image_url: `${import.meta.env.BASE_URL}cards/obo_at.png`,
+        name: "あああ6",
+        image_url: `${import.meta.env.BASE_URL}cards/ramune_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -449,26 +449,26 @@ const localCards = [
       {
         id: "n30",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/obo_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/ramune_m.png`,
     
         card_type: {
           internal_id: "memoria",
           display_name: "メモリア",
         },
-    
+
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
         },
-
+    
         is_ace: false,
         is_local: true,
         is_new: true,
       },
       {
         id: "n31",
-        name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/uhi_at.png`,
+        name: "あああ6",
+        image_url: `${import.meta.env.BASE_URL}cards/mea_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -487,26 +487,26 @@ const localCards = [
       {
         id: "n32",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/uhi_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/mea_m.png`,
     
         card_type: {
           internal_id: "memoria",
           display_name: "メモリア",
         },
-    
+
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
         },
-
+    
         is_ace: false,
         is_local: true,
         is_new: true,
       },
       {
         id: "n33",
-        name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/saine_at.png`,
+        name: "いいい",
+        image_url: `${import.meta.env.BASE_URL}cards/obo_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -525,7 +525,7 @@ const localCards = [
       {
         id: "n34",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/saine_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/obo_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -544,7 +544,7 @@ const localCards = [
       {
         id: "n35",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/inui_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/uhi_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -563,7 +563,7 @@ const localCards = [
       {
         id: "n36",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/inui_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/uhi_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -582,7 +582,7 @@ const localCards = [
       {
         id: "n37",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/raizin_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/saine_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -601,7 +601,7 @@ const localCards = [
       {
         id: "n38",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/raizin_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/saine_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -620,7 +620,7 @@ const localCards = [
       {
         id: "n39",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/akari_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/inui_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -639,7 +639,7 @@ const localCards = [
       {
         id: "n40",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/akari_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/inui_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -658,7 +658,7 @@ const localCards = [
       {
         id: "n41",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/mother_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/raizin_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -677,7 +677,7 @@ const localCards = [
       {
         id: "n42",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/mother_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/raizin_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -696,7 +696,7 @@ const localCards = [
       {
         id: "n43",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/kurom_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/akari_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -715,7 +715,7 @@ const localCards = [
       {
         id: "n44",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/kurom_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/akari_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -734,7 +734,7 @@ const localCards = [
       {
         id: "n45",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/toko_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/mother_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -753,7 +753,7 @@ const localCards = [
       {
         id: "n46",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/toko_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/mother_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -772,7 +772,7 @@ const localCards = [
       {
         id: "n47",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/chise_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kurom_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -791,7 +791,7 @@ const localCards = [
       {
         id: "n48",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/chise_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/kurom_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -810,7 +810,7 @@ const localCards = [
       {
         id: "n49",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/tentei_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/toko_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -829,7 +829,7 @@ const localCards = [
       {
         id: "n50",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/tentei_m.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/toko_m.png`,
     
         card_type: {
           internal_id: "memoria",
@@ -848,7 +848,7 @@ const localCards = [
       {
         id: "n51",
         name: "あああ",
-        image_url: `${import.meta.env.BASE_URL}cards/zyasu_at.png`,
+        image_url: `${import.meta.env.BASE_URL}cards/chise_at.png`,
     
         card_type: {
           internal_id: "attack",
@@ -866,6 +866,82 @@ const localCards = [
       },
       {
         id: "n52",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/chise_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n53",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/tentei_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n54",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/tentei_m.png`,
+    
+        card_type: {
+          internal_id: "memoria",
+          display_name: "メモリア",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n55",
+        name: "あああ",
+        image_url: `${import.meta.env.BASE_URL}cards/zyasu_at.png`,
+    
+        card_type: {
+          internal_id: "attack",
+          display_name: "アタック",
+        },
+    
+        build_rule:{
+          type:"require_leader",
+          description:"リーダー：あああ",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n56",
         name: "あああ",
         image_url: `${import.meta.env.BASE_URL}cards/zyasu_m.png`,
     

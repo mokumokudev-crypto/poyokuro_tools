@@ -436,19 +436,53 @@ useEffect(() => {
     grouped.sort((a, b) => {
       const getOrder = (card) => {
         const type = getCardType(card);
-  
+      
         // エースアタック
-        if (card.is_ace && type === "attack") return 1;
-  
+        if (card.is_ace && type === "attack") {
+          return 1;
+        }
+      
         // エースメモリア
-        if (card.is_ace && type === "memoria") return 2;
-  
-        // 通常アタック
-        if (!card.is_ace && type === "attack") return 3;
-  
-        // 通常メモリア
-        if (!card.is_ace && type === "memoria") return 4;
-  
+        if (card.is_ace && type === "memoria") {
+          return 2;
+        }
+      
+        // リーダー専用アタック
+        if (
+          !card.is_ace &&
+          type === "attack" &&
+          card.build_rule?.type === "require_leader"
+        ) {
+          return 3;
+        }
+      
+        // ニュートラルアタック
+        if (
+          !card.is_ace &&
+          type === "attack" &&
+          card.build_rule?.type !== "require_leader"
+        ) {
+          return 4;
+        }
+      
+        // リーダー専用メモリア
+        if (
+          !card.is_ace &&
+          type === "memoria" &&
+          card.build_rule?.type === "require_leader"
+        ) {
+          return 5;
+        }
+      
+        // ニュートラルメモリア
+        if (
+          !card.is_ace &&
+          type === "memoria" &&
+          card.build_rule?.type !== "require_leader"
+        ) {
+          return 6;
+        }
+      
         return 999;
       };
   

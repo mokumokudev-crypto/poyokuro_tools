@@ -254,6 +254,12 @@ body,
 /* =========================
    デッキリスト
 ========================= */
+.deckList-modal,
+.deckList-modal h1,
+.deckList-modal h2,
+.deckList-modal div {
+    color: inherit;
+}
 
 .deckList-overlay {
     position: fixed;
@@ -267,7 +273,6 @@ body,
   }
   
   .deckList-modal {
-    background: white;
   
     width: 50vw;
     height: 55vh;

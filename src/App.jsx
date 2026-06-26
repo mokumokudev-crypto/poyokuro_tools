@@ -589,6 +589,7 @@ function App() {
           相手読込
         </button>
       </div>
+      
 
       {(playerDeckData || opponentDeckData) && (
         <>

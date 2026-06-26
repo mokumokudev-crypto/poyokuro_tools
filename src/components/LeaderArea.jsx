@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function LeaderArea({ leaders, opponentLeaders,}) {
   // 元の HP 管理ロジックをそのまま使用
@@ -26,6 +26,21 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
       }))
     );
   }, [opponentLeaders]);
+
+  const pressTimer = useRef(null);
+  const isLongPress = useRef(false);
+  const handlePressStart = (index, toggleAwaken) => {
+    isLongPress.current = false;
+  
+    pressTimer.current = setTimeout(() => {
+      isLongPress.current = true;
+      toggleAwaken(index);
+    }, 600);
+  };
+  
+  const handlePressEnd = () => {
+    clearTimeout(pressTimer.current);
+  };
 
   const adjustHp = (index, amount) => {
     setLeaderStates((prev) =>
@@ -131,7 +146,28 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
         {leaderStates.map((leader, index) => (
           <div key={leader.leader_id} className="leader-item">
 
-            <div className="leader-image-wrapper">
+            <div 
+                className="leader-image-wrapper"
+                onMouseDown={() =>
+                  handlePressStart(index, toggleAwaken)
+                }
+                onMouseUp={handlePressEnd}
+                onMouseLeave={handlePressEnd}
+                onClick={(e) => {
+                  if (isLongPress.current) return;
+              
+                  const rect =
+                    e.currentTarget.getBoundingClientRect();
+              
+                  const y = e.clientY - rect.top;
+              
+                  if (y < rect.height / 2) {
+                    adjustHp(index, +10);
+                  } else {
+                    adjustHp(index, -10);
+                  }
+                }}
+            >
             <img
               src={
                 leader.awakened
@@ -140,9 +176,6 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
               }
               alt={leader.name}
               className="leader-img"
-              onDoubleClick={() =>
-                toggleAwaken(index)
-              }
             />
 
               <div className="leader-hp-overlay">
@@ -153,11 +186,6 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
             {leader.currentHp === 0 && (
               <div className="leader-down">DOWN</div>
             )}
-
-            <div className="leader-buttons">
-              <button onClick={() => adjustHp(index, +10)}>＋</button>
-              <button onClick={() => adjustHp(index, -10)}>−</button>
-            </div>
 
           </div>
         ))}
@@ -168,7 +196,28 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
         {opponentLeaderStates.map((leader, index) => (
           <div key={leader.leader_id} className="leader-item">
 
-            <div className="leader-image-wrapper">
+            <div 
+                className="leader-image-wrapper"
+                onMouseDown={() =>
+                  handlePressStart(index, toggleAwaken)
+                }
+                onMouseUp={handlePressEnd}
+                onMouseLeave={handlePressEnd}
+                onClick={(e) => {
+                  if (isLongPress.current) return;
+              
+                  const rect =
+                    e.currentTarget.getBoundingClientRect();
+              
+                  const y = e.clientY - rect.top;
+              
+                  if (y < rect.height / 2) {
+                    adjustHp(index, +10);
+                  } else {
+                    adjustHp(index, -10);
+                  }
+                }}
+            >
             <img
               src={
                 leader.awakened
@@ -177,9 +226,6 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
               }
               alt={leader.name}
               className="leader-img"
-              onDoubleClick={() =>
-                toggleOpponentAwaken(index)
-              }
             />
 
               <div className="leader-hp-overlay">
@@ -190,11 +236,6 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
             {leader.currentHp === 0 && (
               <div className="leader-down">DOWN</div>
             )}
-
-            <div className="leader-buttons">
-              <button onClick={() => adjustOpponentHp(index, +10)}>＋</button>
-              <button onClick={() => adjustOpponentHp(index, -10)}>−</button>
-            </div>
 
           </div>
         ))}
