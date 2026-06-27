@@ -16,6 +16,7 @@ export default function DeckBuilderPage({ onBack }) {
   );
   
   const [selectedDeck, setSelectedDeck] = useState("");
+  const [selectedColors, setSelectedColors] = useState([]);
   const [showDeckList, setShowDeckList] = useState(false);
 
   let pressTimer = null;
@@ -283,9 +284,34 @@ useEffect(() => {
   // =========================
   // カード検索
   // =========================
-  const filteredCards = cards.filter((card) =>
-    card.name.toLowerCase().includes(keyword.toLowerCase())
-  );
+  const filteredCards = cards.filter((card) => {
+    const keywordMatch =
+      card.name
+        .toLowerCase()
+        .includes(keyword.toLowerCase());
+  
+    const colorMatch =
+      selectedColors.length === 0 ||
+      selectedColors.includes(
+        card.card_color?.internal_id
+      );
+  
+    return keywordMatch && colorMatch;
+  });
+
+  const toggleColor = (color) => {
+    setSelectedColors((prev) => {
+      if (prev.includes(color)) {
+        return prev.filter((c) => c !== color);
+      }
+  
+      return [...prev, color];
+    });
+  };
+  
+  const clearColors = () => {
+    setSelectedColors([]);
+  };
   // =========================
   // 自動分類
   // =========================
@@ -565,31 +591,96 @@ useEffect(() => {
             </button>
             <button onClick={onBack} className="back-button">一人回しへ戻る</button>
       {/* =========================
-          検索
-      ========================= */}
-      <div className="deckBuilder-search">
-      <input
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        placeholder="カード名検索"
-      />
+            検索
+        ========================= */}
+        <div className="deckBuilder-search">
 
-        <button onClick={() => fetchCards("")}>全カード</button>
-        <button onClick={() => fetchCards("leader")}>リーダー</button>
-        <button onClick={() => fetchCards("ace")}>エース</button>
-        <button onClick={() => fetchCards("leaderMain")}>リーダー専用</button>
-        <button onClick={() => fetchCards("neutral")}>ニュートラル</button>
-        <button onClick={() => fetchCards("main")}>メイン</button>
-        <button onClick={() => fetchCards("tactics")}>タクティクス</button>
+        {/* 1行目 */}
+        <div className="search-top">
+          <input
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="カード名検索"
+          />
 
-        <button onClick={() => fetchCards("new")}>新カード全</button>
-        <button onClick={() => fetchCards("newLeader")}>新リーダー</button>
-        <button onClick={() => fetchCards("newAce")}>新エース</button>
-        <button onClick={() => fetchCards("newLeaderMain")}>新リーダー専用</button>
-        <button onClick={() => fetchCards("newNeutral")}>新ニュートラル</button>
-        <button onClick={() => fetchCards("newMain")}>新メイン</button>
-        <button onClick={() => fetchCards("newTactics")}>新タクティクス</button>
-      </div>
+          <div className="color-filter">
+            <button
+              className={
+                selectedColors.length === 0
+                  ? "active"
+                  : ""
+              }
+              onClick={clearColors}
+            >
+              全色
+            </button>
+
+            <button
+              className={
+                selectedColors.includes("red")
+                  ? "active red"
+                  : "red"
+              }
+              onClick={() => toggleColor("red")}
+            >
+              赤
+            </button>
+
+            <button
+              className={
+                selectedColors.includes("blue")
+                  ? "active blue"
+                  : "blue"
+              }
+              onClick={() => toggleColor("blue")}
+            >
+              青
+            </button>
+
+            <button
+              className={
+                selectedColors.includes("yellow")
+                  ? "active yellow"
+                  : "yellow"
+              }
+              onClick={() => toggleColor("yellow")}
+            >
+              黄
+            </button>
+
+            <button
+              className={
+                selectedColors.includes("green")
+                  ? "active green"
+                  : "green"
+              }
+              onClick={() => toggleColor("green")}
+            >
+              緑
+            </button>
+          </div>
+        </div>
+
+        {/* 2行目 */}
+        <div className="search-buttons">
+          <button onClick={() => fetchCards("")}>全カード</button>
+          <button onClick={() => fetchCards("leader")}>リーダー</button>
+          <button onClick={() => fetchCards("ace")}>エース</button>
+          <button onClick={() => fetchCards("leaderMain")}>リーダー専用</button>
+          <button onClick={() => fetchCards("neutral")}>ニュートラル</button>
+          <button onClick={() => fetchCards("main")}>メイン</button>
+          <button onClick={() => fetchCards("tactics")}>タクティクス</button>
+
+          <button onClick={() => fetchCards("new")}>新カード全</button>
+          <button onClick={() => fetchCards("newLeader")}>新リーダー</button>
+          <button onClick={() => fetchCards("newAce")}>新エース</button>
+          <button onClick={() => fetchCards("newLeaderMain")}>新リーダー専用</button>
+          <button onClick={() => fetchCards("newNeutral")}>新ニュートラル</button>
+          <button onClick={() => fetchCards("newMain")}>新メイン</button>
+          <button onClick={() => fetchCards("newTactics")}>新タクティクス</button>
+        </div>
+
+        </div>
 
       {/* =========================
           カード一覧

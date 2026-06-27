@@ -456,6 +456,84 @@ button:active {
 }
 
 /* =========================
+   色フィルタ
+========================= */
+.search-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.search-top input {
+  width: 220px;
+  padding: 8px 12px;
+}
+
+.search-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.color-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.color-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.color-filter button {
+  min-width: 70px;
+  border-radius: 999px;
+  font-weight: bold;
+  color: white;
+  border: 2px solid transparent;
+  transition: 0.2s;
+}
+
+/* 赤 */
+.color-filter .red {
+  background: #d83a3a;
+}
+
+/* 青 */
+.color-filter .blue {
+  background: #2b6dff;
+}
+
+/* 黄 */
+.color-filter .yellow {
+  background: #e6bf00;
+  color: black;
+}
+
+/* 緑 */
+.color-filter .green {
+  background: #1da94a;
+}
+
+/* 全色 */
+.color-filter button:not(.red):not(.blue):not(.yellow):not(.green) {
+  background: #666;
+}
+
+/* 選択中 */
+.color-filter .active {
+  border: 3px solid white;
+  box-shadow:
+      0 0 12px rgba(255,255,255,0.8);
+  transform: scale(1.08);
+}
+/* =========================
    戻るボタン
 ========================= */
 
