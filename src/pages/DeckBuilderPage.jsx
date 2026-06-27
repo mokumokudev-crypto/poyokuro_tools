@@ -441,6 +441,52 @@ useEffect(() => {
     setDeck(target.deck);
   };
 
+  const addLeaderCards = () => {
+    if (deck.leader.length === 0) {
+      alert("リーダーを選択してください");
+      return;
+    }
+  
+    const leaderFamilyIds = deck.leader.map(
+      (leader) => leader.family_id
+    );
+  
+    const allCards = JSON.parse(
+      localStorage.getItem("allCards") || "[]"
+    );
+  
+    const leaderCards = allCards.filter(
+      (card) =>
+        card.build_rule?.type === "require_leader" &&
+        leaderFamilyIds.includes(
+          card.build_rule.family_id
+        )
+    );
+  
+    setDeck((prev) => {
+      const main = [...prev.main];
+  
+      leaderCards.forEach((card) => {
+        const currentCount = main.filter(
+          (c) => c.id === card.id
+        ).length;
+  
+        for (
+          let i = currentCount;
+          i < 4 && main.length < 100;
+          i++
+        ) {
+          main.push(card);
+        }
+      });
+  
+      return {
+        ...prev,
+        main,
+      };
+    });
+  };
+
   // =========================
   // メイングループ化
   // =========================
@@ -679,7 +725,6 @@ useEffect(() => {
           <button onClick={() => fetchCards("newMain")}>新メイン</button>
           <button onClick={() => fetchCards("newTactics")}>新タクティクス</button>
         </div>
-
         </div>
 
       {/* =========================
@@ -739,7 +784,15 @@ useEffect(() => {
 
           {/* Leader */}
           <div className="deck-section">
-            <h4>リーダー</h4>
+            <h4>リーダー{"　　"}
+              <button
+                className="leader-auto-button"
+                onClick={addLeaderCards}
+              >
+                専用カード投入
+              </button>
+            </h4>
+
 
             {deck.leader.map((card, i) => (
               <div key={i} onClick={() => removeFromDeck("leader", i)} className="deck-main-item">

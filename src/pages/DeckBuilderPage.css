@@ -455,6 +455,22 @@ button:active {
         0 2px 6px rgba(0,0,0,0.2);
 }
 
+.deck-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.deck-section-header h4 {
+  margin: 0;
+}
+
+.leader-auto-button {
+  margin-left: auto;
+  padding: 4px 10px;
+  font-size: 12px;
+}
 /* =========================
    色フィルタ
 ========================= */
