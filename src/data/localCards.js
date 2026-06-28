@@ -1,4 +1,7 @@
 const localCards = [
+    /********************************
+     * エース
+     ********************************/
     {
       id: "n1",
       name: "慈悲の刃",
@@ -29,7 +32,7 @@ const localCards = [
       },
       {
         id: "n3",
-        name: "収穫の刻",
+        name: "オーバードライブ",
         image_url: `${import.meta.env.BASE_URL}cards/ace_blue_a.png`,
     
         card_type: {
@@ -43,7 +46,7 @@ const localCards = [
       },
       {
         id: "n4",
-        name: "収穫の刻",
+        name: "ダイナミックデュオ",
         image_url: `${import.meta.env.BASE_URL}cards/ace_blue_m.png`,
     
         card_type: {
@@ -57,7 +60,7 @@ const localCards = [
       },
       {
         id: "n5",
-        name: "収穫の刻",
+        name: "テラーエンゲージ",
         image_url: `${import.meta.env.BASE_URL}cards/ace_yellow_a.png`,
     
         card_type: {
@@ -71,7 +74,7 @@ const localCards = [
       },
       {
         id: "n6",
-        name: "収穫の刻",
+        name: "グレイトフルファーマー",
         image_url: `${import.meta.env.BASE_URL}cards/ace_yellow_m.png`,
     
         card_type: {
@@ -85,7 +88,7 @@ const localCards = [
       },
       {
         id: "n7",
-        name: "収穫の刻",
+        name: "アナイアレーション",
         image_url: `${import.meta.env.BASE_URL}cards/ace_green_a.png`,
     
         card_type: {
@@ -111,11 +114,15 @@ const localCards = [
         is_local: true,
         is_new: true,
       },
+     /********************************
+      * リーダー
+     ********************************/
       {
         id: "n9",
         name: "夢野あかり",
         image_url: `${import.meta.env.BASE_URL}cards/akari_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/akari_a.png`,
+        family_id:"n9",
     
         card_type: {
           internal_id: "leader",
@@ -128,9 +135,10 @@ const localCards = [
       },
       {
         id: "n10",
-        name: "夢野あかり",
+        name: "らいじん",
         image_url: `${import.meta.env.BASE_URL}cards/raizin_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/raizin_a.png`,
+        family_id:"n10",
     
         card_type: {
           internal_id: "leader",
@@ -143,9 +151,10 @@ const localCards = [
       },
       {
         id: "n11",
-        name: "夢野あかり",
+        name: "うぉっか",
         image_url: `${import.meta.env.BASE_URL}cards/voka_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/voka_a.png`,
+        family_id:"n11",
     
         card_type: {
           internal_id: "leader",
@@ -158,9 +167,10 @@ const localCards = [
       },
       {
         id: "n12",
-        name: "夢野あかり",
+        name: "昏昏アリア",
         image_url: `${import.meta.env.BASE_URL}cards/aria_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/aria_a.png`,
+        family_id:"n12",
     
         card_type: {
           internal_id: "leader",
@@ -173,9 +183,10 @@ const localCards = [
       },
       {
         id: "n13",
-        name: "くろむ",
+        name: "夜乃くろむ",
         image_url: `${import.meta.env.BASE_URL}cards/kurom_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/kurom_a.png`,
+        family_id:"n13",
     
         card_type: {
           internal_id: "leader",
@@ -188,9 +199,10 @@ const localCards = [
       },
       {
         id: "n14",
-        name: "くろむ",
+        name: "白波らむね",
         image_url: `${import.meta.env.BASE_URL}cards/ramune_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/ramune_a.png`,
+        family_id:"n14",
     
         card_type: {
           internal_id: "leader",
@@ -203,9 +215,10 @@ const localCards = [
       },
       {
         id: "n15",
-        name: "くろむ",
+        name: "まざー３",
         image_url: `${import.meta.env.BASE_URL}cards/mother_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/mother_a.png`,
+        family_id:"n15",
     
         card_type: {
           internal_id: "leader",
@@ -218,9 +231,10 @@ const localCards = [
       },
       {
         id: "n16",
-        name: "くろむ",
+        name: "神楽めあ",
         image_url: `${import.meta.env.BASE_URL}cards/mea_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/mea_a.png`,
+        family_id:"n16",
     
         card_type: {
           internal_id: "leader",
@@ -233,9 +247,10 @@ const localCards = [
       },
       {
         id: "n17",
-        name: "ちせ",
+        name: "龍巻ちせ",
         image_url: `${import.meta.env.BASE_URL}cards/chise_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/chise_a.png`,
+        family_id:"n17",
     
         card_type: {
           internal_id: "leader",
@@ -248,9 +263,10 @@ const localCards = [
       },
       {
         id: "n18",
-        name: "ちせ",
+        name: "千燈うひ",
         image_url: `${import.meta.env.BASE_URL}cards/uhi_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/uhi_a.png`,
+        family_id:"n18",
     
         card_type: {
           internal_id: "leader",
@@ -263,9 +279,10 @@ const localCards = [
       },
       {
         id: "n19",
-        name: "ちせ",
+        name: "とおこ",
         image_url: `${import.meta.env.BASE_URL}cards/toko_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/toko_a.png`,
+        family_id:"n19",
     
         card_type: {
           internal_id: "leader",
@@ -278,9 +295,10 @@ const localCards = [
       },
       {
         id: "n20",
-        name: "ちせ",
+        name: "おぼ",
         image_url: `${import.meta.env.BASE_URL}cards/obo_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/obo_a.png`,
+        family_id:"n20",
     
         card_type: {
           internal_id: "leader",
@@ -293,9 +311,10 @@ const localCards = [
       },
       {
         id: "n21",
-        name: "サイネ",
+        name: "銀城サイネ",
         image_url: `${import.meta.env.BASE_URL}cards/saine_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/saine_a.png`,
+        family_id:"n21",
     
         card_type: {
           internal_id: "leader",
@@ -308,9 +327,10 @@ const localCards = [
       },
       {
         id: "n22",
-        name: "サイネ",
+        name: "天帝フォルテ",
         image_url: `${import.meta.env.BASE_URL}cards/tentei_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/tentei_a.png`,
+        family_id:"n22",
     
         card_type: {
           internal_id: "leader",
@@ -323,9 +343,10 @@ const localCards = [
       },
       {
         id: "n23",
-        name: "サイネ",
+        name: "じゃすぱー",
         image_url: `${import.meta.env.BASE_URL}cards/zyasu_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/zyasu_a.png`,
+        family_id:"n23",
     
         card_type: {
           internal_id: "leader",
@@ -338,9 +359,10 @@ const localCards = [
       },
       {
         id: "n24",
-        name: "サイネ",
+        name: "乾伸一郎",
         image_url: `${import.meta.env.BASE_URL}cards/inui_b.png`,
         awaken_image_url:`${import.meta.env.BASE_URL}cards/inui_a.png`,
+        family_id:"n24",
     
         card_type: {
           internal_id: "leader",
@@ -351,6 +373,9 @@ const localCards = [
         is_local: true,
         is_new: true,
       },
+      /********************************
+        * リーダー専用カード
+      ********************************/
       {
         id: "n25",
         name: "あああ6",
@@ -364,6 +389,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n12",
         },
 
         is_ace: false,
@@ -383,6 +409,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n12",
         },
     
         is_ace: false,
@@ -402,6 +429,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n11",
         },
 
         is_ace: false,
@@ -421,6 +449,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n11",
         },
 
         is_ace: false,
@@ -440,6 +469,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n14",
         },
 
         is_ace: false,
@@ -459,6 +489,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n14",
         },
     
         is_ace: false,
@@ -478,6 +509,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n16",
         },
 
         is_ace: false,
@@ -497,6 +529,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n16",
         },
     
         is_ace: false,
@@ -516,6 +549,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n20",
         },
 
         is_ace: false,
@@ -535,6 +569,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n20",
         },
 
         is_ace: false,
@@ -554,6 +589,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n18",
         },
 
         is_ace: false,
@@ -573,6 +609,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n18",
         },
 
         is_ace: false,
@@ -592,6 +629,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n21",
         },
 
         is_ace: false,
@@ -611,6 +649,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n21",
         },
 
         is_ace: false,
@@ -630,6 +669,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n24",
         },
 
         is_ace: false,
@@ -649,6 +689,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n24",
         },
 
         is_ace: false,
@@ -668,6 +709,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n10",
         },
 
         is_ace: false,
@@ -687,6 +729,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n10",
         },
 
         is_ace: false,
@@ -706,6 +749,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n9",
         },
 
         is_ace: false,
@@ -725,6 +769,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n9",
         },
 
         is_ace: false,
@@ -744,6 +789,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n15",
         },
 
         is_ace: false,
@@ -763,6 +809,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n15",
         },
 
         is_ace: false,
@@ -782,6 +829,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n13",
         },
 
         is_ace: false,
@@ -801,6 +849,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n13",
         },
 
         is_ace: false,
@@ -820,6 +869,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n19",
         },
 
         is_ace: false,
@@ -839,6 +889,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n19",
         },
 
         is_ace: false,
@@ -858,6 +909,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n17",
         },
 
         is_ace: false,
@@ -877,6 +929,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n17",
         },
 
         is_ace: false,
@@ -896,6 +949,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n22",
         },
 
         is_ace: false,
@@ -915,6 +969,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n22",
         },
 
         is_ace: false,
@@ -934,6 +989,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n23",
         },
 
         is_ace: false,
@@ -953,6 +1009,7 @@ const localCards = [
         build_rule:{
           type:"require_leader",
           description:"リーダー：あああ",
+          family_id:"n23",
         },
 
         is_ace: false,

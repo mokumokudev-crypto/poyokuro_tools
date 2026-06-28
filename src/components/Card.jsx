@@ -1,6 +1,7 @@
 import "./Card.css";
 
 function Card({ src, name, type, onClick }) {
+
   return (
     <div className={`card ${type}`}>
       <img

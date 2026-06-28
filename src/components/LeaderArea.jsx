@@ -1,6 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 
-export default function LeaderArea({ leaders, opponentLeaders,}) {
+export default function LeaderArea({ 
+  leaders, 
+  opponentLeaders,
+  playerEquipment,
+  setPlayerEquipment,
+  opponentEquipment,
+  setOpponentEquipment,
+  pendingPlayerEquipment,
+  setPendingPlayerEquipment,
+  movingPlayerEquipment,
+  setMovingPlayerEquipment,
+  onLeaderClick,
+  resetAllHpTrigger,
+}) {
   // 元の HP 管理ロジックをそのまま使用
   const [leaderStates, setLeaderStates] = useState([]);
   const [opponentLeaderStates, setOpponentLeaderStates] = useState([]);
@@ -27,6 +40,11 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
     );
   }, [opponentLeaders]);
 
+  useEffect(() => {
+    setLeaderStates((prev) => prev.map(resetLeaderHp));
+    setOpponentLeaderStates((prev) => prev.map(resetLeaderHp));
+  }, [resetAllHpTrigger]);
+
   const pressTimer = useRef(null);
   const isLongPress = useRef(false);
   const handlePressStart = (index, toggleAwaken) => {
@@ -50,9 +68,7 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
         const newHp = Math.max(
           0,
           Math.min(
-            leader.awakened
-              ? leader.awaken_hp
-              : leader.hp,
+            240,
             leader.currentHp + amount
           )
         );
@@ -138,13 +154,20 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
       })
     );
   };
+
+  const resetLeaderHp = (leader) => ({
+    ...leader,
+    currentHp: leader.awakened ? leader.awaken_hp : leader.hp,
+  });
+
+
   return (
     <div className="leader-wrapper">
 
       {/* 自分のリーダー */}
       <div className="leader-grid">
         {leaderStates.map((leader, index) => (
-          <div key={leader.leader_id} className="leader-item">
+          <div key={leader.leader_id} className="leader-item" onClick={() => onLeaderClick(leader.leader_id)}>
 
             <div 
                 className="leader-image-wrapper"
@@ -155,7 +178,7 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
                 onMouseLeave={handlePressEnd}
                 onClick={(e) => {
                   if (isLongPress.current) return;
-              
+                  if (pendingPlayerEquipment || movingPlayerEquipment) return;
                   const rect =
                     e.currentTarget.getBoundingClientRect();
               
@@ -178,7 +201,31 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
               className="leader-img"
             />
 
-              <div className="leader-hp-overlay">
+            {/* 装備表示 */}
+            <div className="equipment-stack">
+              {(playerEquipment[leader.leader_id] || []).map((card, index) => (
+                <img
+                  key={index}
+                  src={card.image_url}
+                  className="equipment-image"
+                  style={{
+                    transform: `translate(${index * 24}px, ${index * 16}px)`,
+                    zIndex: index,
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    setMovingPlayerEquipment({
+                      card,
+                      from: leader.leader_id,
+                    });
+                  }}
+                />
+              ))}
+            </div>
+
+              <div className="leader-hp-overlay player-hp">
                 {leader.currentHp}
               </div>
             </div>
@@ -191,32 +238,32 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
         ))}
       </div>
 
-      {/* 相手のリーダー（同じ UI を複製） */}
+      {/* 相手のリーダー */}
       <div className="leader-grid">
         {opponentLeaderStates.map((leader, index) => (
           <div key={leader.leader_id} className="leader-item">
 
-            <div 
-                className="leader-image-wrapper"
-                onMouseDown={() =>
-                  handlePressStart(index, toggleAwaken)
+            <div
+              className="leader-image-wrapper"
+              onMouseDown={() =>
+                handlePressStart(index, toggleOpponentAwaken)
+              }
+              onMouseUp={handlePressEnd}
+              onMouseLeave={handlePressEnd}
+              onClick={(e) => {
+                if (isLongPress.current) return;
+
+                const rect =
+                  e.currentTarget.getBoundingClientRect();
+
+                const y = e.clientY - rect.top;
+
+                if (y < rect.height / 2) {
+                  adjustOpponentHp(index, +10);
+                } else {
+                  adjustOpponentHp(index, -10);
                 }
-                onMouseUp={handlePressEnd}
-                onMouseLeave={handlePressEnd}
-                onClick={(e) => {
-                  if (isLongPress.current) return;
-              
-                  const rect =
-                    e.currentTarget.getBoundingClientRect();
-              
-                  const y = e.clientY - rect.top;
-              
-                  if (y < rect.height / 2) {
-                    adjustHp(index, +10);
-                  } else {
-                    adjustHp(index, -10);
-                  }
-                }}
+              }}
             >
             <img
               src={
@@ -228,7 +275,7 @@ export default function LeaderArea({ leaders, opponentLeaders,}) {
               className="leader-img"
             />
 
-              <div className="leader-hp-overlay">
+              <div className="leader-hp-overlay opponent-hp">
                 {leader.currentHp}
               </div>
             </div>

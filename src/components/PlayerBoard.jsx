@@ -8,6 +8,9 @@ export default function PlayerBoard({
   tacticsArea,
   tacticsDeck,
   pp,
+  setDeck,
+  setPlayArea,
+  setTrashArea,
 
   drawStartingHand,
   drawCard,
@@ -15,6 +18,8 @@ export default function PlayerBoard({
   moveSelectedToTrash,
   linkAssault,
   endTurn,
+  endRound,
+  onOpenTactics,
 
   playCard,
   returnToHand,
@@ -24,6 +29,15 @@ export default function PlayerBoard({
 
   increasePP,
   decreasePP,
+  playerEquipment,
+  setPlayerEquipment,
+  opponentEquipment,
+  setOpponentEquipment,
+  pendingPlayerEquipment,
+  setPendingPlayerEquipment,
+  movingPlayerEquipment,
+  setMovingPlayerEquipment,
+  onLeaderClick,
 }) {
   return (
     <BoardArea
@@ -34,6 +48,10 @@ export default function PlayerBoard({
       tacticsArea={tacticsArea}
       tacticsDeck={tacticsDeck}
       pp={pp}
+      setDeck={setDeck}
+      setPlayArea={setPlayArea}
+      setTrashArea={setTrashArea}
+      onOpenTactics={onOpenTactics}
 
       drawStartingHand={drawStartingHand}
       drawCard={drawCard}
@@ -41,6 +59,7 @@ export default function PlayerBoard({
       moveSelectedToTrash={moveSelectedToTrash}
       linkAssault={linkAssault}
       endTurn={endTurn}
+      endRound={endRound}
 
       playCard={playCard}
       returnToHand={returnToHand}
@@ -50,6 +69,15 @@ export default function PlayerBoard({
 
       increasePP={increasePP}
       decreasePP={decreasePP}
+      playerEquipment={playerEquipment}
+      setPlayerEquipment={setPlayerEquipment}
+      opponentEquipment={opponentEquipment}
+      setOpponentEquipment={setOpponentEquipment}
+      pendingPlayerEquipment={pendingPlayerEquipment}
+      setPendingPlayerEquipment={setPendingPlayerEquipment}
+      movingPlayerEquipment={movingPlayerEquipment}
+      setMovingPlayerEquipment={setMovingPlayerEquipment}
+      onLeaderClick={onLeaderClick}
     />
   );
 }

@@ -6,6 +6,7 @@ import LoginPage from "./LoginPage";
 import LeaderArea from "./components/LeaderArea";
 import PlayerBoard from "./components/PlayerBoard";
 import OpponentBoard from "./components/OpponentBoard";
+import TacticsArea from "./components/TacticsArea";
 
 const GAS_URL =
 "https://script.google.com/macros/s/AKfycbwYOkMSRnZSLozkLdgDK24qSZcyxuQnbYOiIGr4rvOeYY2fLCrLZIqzx3-vkqVtcvq5bg/exec";
@@ -22,6 +23,8 @@ function App() {
 
   const [playerDeckData, setPlayerDeckData] = useState(null);
   const [opponentDeckData, setOpponentDeckData] = useState(null);
+  const [showTacticsModal, setShowTacticsModal] = useState(false);
+  const [resetAllHpTrigger, setResetAllHpTrigger] = useState(0);
 
   // Player
   const [playerDeck, setPlayerDeck] = useState([]);
@@ -46,8 +49,16 @@ function App() {
   const [opponentPP, setOpponentPP] = useState(0);
   const [opponentTrashHistory,setOpponentTrashHistory] = useState([]);
   const [opponentTurn,setOpponentTurn] = useState(1);
+  const [pendingPlayerEquipment, setPendingPlayerEquipment] = useState(null);
+  const [pendingOpponentEquipment, setPendingOpponentEquipment] = useState(null);
+  const [movingPlayerEquipment, setMovingPlayerEquipment] = useState(null);
+  const [movingOpponentEquipment, setMovingOpponentEquipment] = useState(null);
+  const [playerEquipment, setPlayerEquipment] = useState({});
+  const [opponentEquipment, setOpponentEquipment] = useState({});
+  const [round, setRound] = useState(1);
+  const [open, setOpen] = useState(false);
 
-  const getTextColor = (hex) => {
+ const getTextColor = (hex) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
     const b = parseInt(hex.slice(5, 7), 16);
@@ -92,6 +103,22 @@ function App() {
     return { leaders, tactics, deck };
   };
 
+  const resolveCardsByImage = (cardsFromDeck) => {
+    const allCards = JSON.parse(
+      localStorage.getItem("allCards") || "[]"
+    );
+  
+    return cardsFromDeck
+    .map((c) => {
+      const found = allCards.find(
+        (local) => local.image_url === c.image_url
+      );
+  
+      return found ? { ...found, type: c.type } : null;
+    })
+    .filter(Boolean);
+  };
+
   const [savedDecks, setSavedDecks] = useState(
     JSON.parse(
       localStorage.getItem("savedDecks") || "[]"
@@ -134,7 +161,9 @@ function App() {
     setPlayerDeck(
       [...data.deck].sort(() => Math.random() - 0.5)
     );
-    setPlayerTacticsDeck(data.tactics);
+    setPlayerTacticsDeck(
+        resolveCardsByImage(data.tactics)
+    );
   
     setPlayerHand([]);
     setPlayerPlayArea([]);
@@ -158,7 +187,9 @@ function App() {
     setOpponentDeck(
       [...data.deck].sort(() => Math.random() - 0.5)
     );
-    setOpponentTacticsDeck(data.tactics);
+    setOpponentTacticsDeck(
+      resolveCardsByImage(loaded.tactics)
+    );
 
     setOpponentHand([]);
     setOpponentPlayArea([]);
@@ -293,8 +324,13 @@ function App() {
     setPlayerPlayArea([]);
     setPlayerTrashArea([]);
   
-    setPlayerTacticsDeck(playerDeckData.tactics);
+    setPlayerTacticsDeck(resolveCardsByImage(playerDeckData.tactics));
     setPlayerTacticsArea([]);
+
+    setPlayerEquipment({}); 
+    setPendingPlayerEquipment(null);
+    setMovingPlayerEquipment(null);
+
   
     setPlayerPP(0);
   };
@@ -310,13 +346,12 @@ function App() {
     setOpponentHand([]);
     setOpponentPlayArea([]);
     setOpponentTrashArea([]);
-  
-    setOpponentTacticsDeck(
-      opponentDeckData.tactics
-    );
+    setOpponentTacticsDeck(resolveCardsByImage(opponentDeckData.tactics));
   
     setOpponentTacticsArea([]);
-  
+    setOpponentEquipment({}); 
+    setPendingOpponentEquipment(null);
+    setMovingOpponentEquipment(null);
     setOpponentPP(0);
   };
 
@@ -442,44 +477,141 @@ function App() {
     );
   };
 
-  const playerMoveTacticToArea = (index) => {
-    const card = playerTacticsDeck[index];
-  
-    setPlayerTacticsArea((prev) => [...prev, card]);
-  
-    setPlayerTacticsDeck((prev) =>
-      prev.filter((_, i) => i !== index)
+  const playerMoveTacticToArea = (card) => {
+    setPlayerTacticsDeck(prev =>
+      prev.filter(c => c !== card)
     );
+  
+    setPlayerTacticsArea(prev => [...prev, card]);
   };
 
-  const opponentMoveTacticToArea = (index) => {
-    const card = opponentTacticsDeck[index];
-  
-    setOpponentTacticsArea((prev) => [...prev, card]);
-  
-    setOpponentTacticsDeck((prev) =>
-      prev.filter((_, i) => i !== index)
+  const opponentMoveTacticToArea = (card) => {
+    setOpponentTacticsDeck(prev =>
+      prev.filter(c => c !== card)
     );
+  
+    setOpponentTacticsArea(prev => [...prev, card]);
   };
 
-  const playerMoveTacticToPlayArea = (index) => {
-    const card = playerTacticsArea[index];
+  const playerMoveTacticToPlayArea = (card) => {
+    if (!card) return;
   
+    // 装備タクティクス
+    if (card.tactics_type === "equipment") {
+      setPendingPlayerEquipment({ card });
+  
+      setShowTacticsModal(false);
+  
+      return;
+    }
+  
+    // 通常タクティクス
     setPlayerPlayArea((prev) => [...prev, card]);
   
     setPlayerTacticsArea((prev) =>
-      prev.filter((_, i) => i !== index)
+      prev.filter((c) => c.id !== card.id)
     );
+
+    setShowTacticsModal(false);
   };
 
-  const opponentMoveTacticToPlayArea = (index) => {
-    const card = opponentTacticsArea[index];
+  const opponentMoveTacticToPlayArea = (card) => {
+    if (!card) return;
   
     setOpponentPlayArea((prev) => [...prev, card]);
   
     setOpponentTacticsArea((prev) =>
-      prev.filter((_, i) => i !== index)
+      prev.filter((c) => c.id !== card.id)
     );
+  
+    setShowTactics(false); // もし共有モーダルなら
+  };
+
+  const handlePlayerLeaderClick = (leaderId) => {
+    // ① 装備
+    if (pendingPlayerEquipment) {
+      setPlayerEquipment(prev => {
+        const current = prev[leaderId] || [];
+    
+        // 5枚制限
+        if (current.length >= 5) {
+          return prev;
+        }
+    
+        return {
+          ...prev,
+          [leaderId]: [...current, pendingPlayerEquipment.card],
+        };
+      });
+    
+      setPlayerTacticsArea(prev =>
+        prev.filter(c => c !== pendingPlayerEquipment.card)
+      );
+    
+      setPendingPlayerEquipment(null);
+      return;
+    }
+  
+    // ② 移動
+    if (movingPlayerEquipment) {
+      setPlayerEquipment(prev => {
+        const fromList = prev[movingPlayerEquipment.from] || [];
+        const toList = prev[leaderId] || [];
+    
+        return {
+          ...prev,
+          [movingPlayerEquipment.from]:
+            fromList.filter(c => c !== movingPlayerEquipment.card),
+    
+          [leaderId]:
+            toList.length < 5
+              ? [...toList, movingPlayerEquipment.card]
+              : toList,
+        };
+      });
+    
+      setMovingPlayerEquipment(null);
+    }
+  };
+
+  const endRound = () => {
+    // プレイヤー
+    if (playerPlayArea.length > 0) {
+      setPlayerTrashHistory((prev) => [
+        ...prev,
+        {
+          turn: playerTurn,
+          round,
+          label: `${playerTurn}ターン目（${round}ラウンド目終了）`,
+          cards: [...playerPlayArea],
+        },
+      ]);
+    }
+
+    setPlayerTrashArea((prev) => [...prev, ...playerPlayArea]);
+    setPlayerPlayArea([]);
+
+    // 相手
+    if (opponentPlayArea.length > 0) {
+      setOpponentTrashHistory((prev) => [
+        ...prev,
+        {
+          turn: opponentTurn,
+          round,
+          label: `${opponentTurn}ターン目（${round}ラウンド目終了）`,
+          cards: [...opponentPlayArea],
+        },
+      ]);
+    }
+
+    setOpponentTrashArea((prev) => [...prev, ...opponentPlayArea]);
+    setOpponentPlayArea([]);
+
+    // ラウンド進行
+    setRound((prev) => prev + 1);
+
+    // HPリセットトリガー
+    setResetAllHpTrigger((v) => v + 1);
   };
 
   if (page === "builder") {
@@ -536,14 +668,32 @@ function App() {
       
 
       <div className="deck-load-area">
-      <input
-        list="deck-history"
-        value={deckCode}
-        onChange={(e) =>
-          setDeckCode(e.target.value)
-        }
-        placeholder="デッキコード"
-      />
+        <div className="deck-input-wrapper">
+        <input
+          value={deckCode}
+          onChange={(e) => setDeckCode(e.target.value)}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setTimeout(() => setOpen(false), 150)}
+          placeholder="デッキコード"
+        />
+
+        {open && deckHistory.length > 0 && (
+          <div className="deck-dropdown">
+            {deckHistory.map((code) => (
+              <div
+                key={code}
+                className="deck-dropdown-item"
+                onClick={() => {
+                  setDeckCode(code);
+                  setOpen(false);
+                }}
+              >
+                {code}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       <datalist id="deck-history">
         {deckHistory.map((code) => (
@@ -593,29 +743,37 @@ function App() {
 
       {(playerDeckData || opponentDeckData) && (
         <>
-          <div className="section">
-            <LeaderArea
-              leaders={playerDeckData?.leaders || []}
-              opponentLeaders={
-                opponentDeckData?.leaders || []
-              }
-            />
-          </div>
+          <div className="leader-layout">
+            <div className="leader-content">
+              <LeaderArea
+                leaders={playerDeckData?.leaders || []}
+                opponentLeaders={
+                  opponentDeckData?.leaders || []
+                }
 
-          <div className="section">
+                playerEquipment={playerEquipment}
+                setPlayerEquipment={setPlayerEquipment}
+              
+                pendingPlayerEquipment={pendingPlayerEquipment}
+                setPendingPlayerEquipment={setPendingPlayerEquipment}
+              
+                movingPlayerEquipment={movingPlayerEquipment}
+                setMovingPlayerEquipment={setMovingPlayerEquipment}
+              
+                onLeaderClick={handlePlayerLeaderClick}
+                resetAllHpTrigger={resetAllHpTrigger}
+              />
+            </div>
+
             <div className="tab-buttons">
               <button
-                onClick={() =>
-                  setActiveTab("player")
-                }
+                onClick={() => setActiveTab("player")}
               >
                 自分盤面
               </button>
 
               <button
-                onClick={() =>
-                  setActiveTab("opponent")
-                }
+                onClick={() => setActiveTab("opponent")}
               >
                 相手盤面
               </button>
@@ -630,7 +788,13 @@ function App() {
               trashArea={playerTrashArea}
               tacticsArea={playerTacticsArea}
               tacticsDeck={playerTacticsDeck}
+              pendingPlayerEquipment={pendingPlayerEquipment}
+              setPendingPlayerEquipment={setPendingPlayerEquipment}
               pp={playerPP}
+              setDeck={setPlayerDeck}
+              setPlayArea={setPlayerPlayArea}
+              setTrashArea={setPlayerTrashArea}
+              onOpenTactics={() => setShowTacticsModal(true)}
 
               drawStartingHand={playerDrawStartingHand}
               drawCard={playerDrawCard}
@@ -642,6 +806,7 @@ function App() {
               moveSelectedToTrash={playerMoveSelectedToTrash}
               linkAssault={playerLinkAssault}
               endTurn={playerEndTurn}
+              endRound={endRound}
             />
           )}
 
@@ -653,7 +818,10 @@ function App() {
               trashArea={opponentTrashArea}
               tacticsArea={opponentTacticsArea}
               tacticsDeck={opponentTacticsDeck}
+              pendingPlayerEquipment={pendingPlayerEquipment}
+              setPendingPlayerEquipment={setPendingPlayerEquipment}
               pp={opponentPP}
+              onOpenTactics={() => setShowTacticsModal(true)}
 
               drawStartingHand={opponentDrawStartingHand}
               drawCard={opponentDrawCard}
@@ -665,6 +833,7 @@ function App() {
               moveSelectedToTrash={opponentMoveSelectedToTrash}
               linkAssault={opponentLinkAssault}
               endTurn={opponentEndTurn}
+              endRound={endRound}
             />
           )}
         </>
@@ -690,7 +859,7 @@ function App() {
                   className="trash-turn-group"
                 >
                   <h3>
-                    ターン {group.turn}
+                    {group.label ?? ` ${group.turn}ターン目`}
                   </h3>
 
                   <div className="card-row">
@@ -761,8 +930,41 @@ function App() {
           </div>
         </div>
       )}
+      {showTacticsModal && (
+        <div className="modal-overlay" onClick={() => setShowTacticsModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>タクティクス</h2>
+
+            <TacticsArea
+              title="タクティクスエリア"
+              tactics={playerTacticsArea}
+              onClickTactic={playerMoveTacticToPlayArea}
+            />
+
+            <TacticsArea
+              title="タクティクスデッキ"
+              tactics={playerTacticsDeck}
+              onClickTactic={playerMoveTacticToArea}
+            />
+
+            <button onClick={() => setShowTacticsModal(false)}>
+              閉じる
+            </button>
+          </div>
+        </div>
+      )}
+      {pendingPlayerEquipment && (
+        <div className="state-banner">
+          装備するリーダーを選択してください
+        </div>
+      )}
+
+      {movingPlayerEquipment && (
+        <div className="state-banner">
+          移動先のリーダーを選択してください
+        </div>
+      )}
     </div>
   );
 }
-
 export default App;

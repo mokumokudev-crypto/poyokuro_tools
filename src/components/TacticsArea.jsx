@@ -6,19 +6,15 @@ function TacticsArea({ title, tactics, onClickTactic }) {
       <h3>{title}</h3>
 
       <div className="tactics-cards">
-        {tactics.map((t, index) => (
-          <Card
-            key={index}
-            src={t.image_url}
-            size="tactics"
-            rotated={true}
-            type={t.type} 
-            onClick={
-              onClickTactic
-                ? () => onClickTactic(index)
-                : undefined
-            }
-          />
+        {tactics
+          .filter(Boolean)
+          .map((t, index) => (
+            <Card
+              key={t?.id ?? index}
+              src={t?.image_url}
+              type={t?.type}
+              onClick={() => onClickTactic(t)}
+            />
         ))}
       </div>
     </div>

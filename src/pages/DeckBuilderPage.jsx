@@ -1012,7 +1012,7 @@ useEffect(() => {
                         key={i}
                         src={card.image_url}
                         alt={card.name}
-                        className="deckList-tacticsCard"
+                        className="card normal rotated"
                         />
                     ))}
 
