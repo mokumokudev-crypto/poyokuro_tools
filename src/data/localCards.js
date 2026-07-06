@@ -1016,6 +1016,76 @@ const localCards = [
         is_local: true,
         is_new: true,
       },
+      {
+        id: "n57",
+        name: "アイテムショップ",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_a.png`,
+    
+        card_type: {
+          internal_id: "tactics",
+          display_name: "タクティクス",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n58",
+        name: "一斉攻撃",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_i.png`,
+    
+        card_type: {
+          internal_id: "tactics",
+          display_name: "タクティクス",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n59",
+        name: "攻撃要請",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_k.png`,
+    
+        card_type: {
+          internal_id: "tactics",
+          display_name: "タクティクス",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n60",
+        name: "呪いの人形",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_n.png`,
+    
+        card_type: {
+          internal_id: "tactics",
+          display_name: "タクティクス",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
+      {
+        id: "n61",
+        name: "討伐クエスト",
+        image_url: `${import.meta.env.BASE_URL}cards/tc_t.png`,
+    
+        card_type: {
+          internal_id: "tactics",
+          display_name: "タクティクス",
+        },
+
+        is_ace: false,
+        is_local: true,
+        is_new: true,
+      },
   ];
   
   export default localCards;
