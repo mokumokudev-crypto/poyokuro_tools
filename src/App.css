@@ -1,7 +1,8 @@
 body {
   margin: 0;
-  padding: 0 3%;
   font-family: Meiryo, sans-serif;
+  overflow-x: hidden;
+
 }
 
 .app-container {
@@ -26,7 +27,6 @@ h2 {
   width: 95%;
   margin: 0 auto 16px;
   border-radius: 8px;
-  padding: 12px;
   margin-bottom: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }

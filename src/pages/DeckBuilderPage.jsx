@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import localCards from "../data/localCards";
 import "./DeckBuilderPage.css";
 
-export default function DeckBuilderPage({ onBack }) {
+export default function DeckBuilderPage({ 
+  setPage,
+  bgColor,
+  setBgColor,
+  textColor,
+}) {
   const [keyword, setKeyword] = useState("");
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -10,9 +15,6 @@ export default function DeckBuilderPage({ onBack }) {
   const [deckName, setDeckName] = useState("");
   const [savedDecks, setSavedDecks] = useState(
     JSON.parse(localStorage.getItem("savedDecks") || "[]")
-  );
-  const [bgColor, setBgColor] = useState(
-    localStorage.getItem("bgColor") || "#ffffff"
   );
   
   const [selectedDeck, setSelectedDeck] = useState("");
@@ -38,41 +40,9 @@ export default function DeckBuilderPage({ onBack }) {
     tactics: [],
   });
 
-  const getTextColor = (hex) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-  
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  
-    return brightness < 128 ? "#ffffff" : "#000000";
-  };
-  
-  const textColor = getTextColor(bgColor);
-
   const GAS_URL =
     "https://script.google.com/macros/s/AKfycbwYOkMSRnZSLozkLdgDK24qSZcyxuQnbYOiIGr4rvOeYY2fLCrLZIqzx3-vkqVtcvq5bg/exec";
-    useEffect(() => {
-        document.body.style.backgroundColor = bgColor;
-      
-        localStorage.setItem("bgColor", bgColor);
-      
-        return () => {
-          document.body.style.backgroundColor = "";
-        };
-      }, [bgColor]);
-      useEffect(() => {
-        localStorage.setItem("bgColor", bgColor);
-      }, [bgColor]);
-      useEffect(() => {
-        document.body.style.backgroundColor = bgColor;
-        document.body.style.color = textColor;
-      
-        return () => {
-          document.body.style.backgroundColor = "";
-          document.body.style.color = "";
-        };
-      }, [bgColor, textColor]);
+    
 // =========================
 // カードキャッシュ
 // =========================
@@ -600,11 +570,14 @@ useEffect(() => {
         }
         <label>
         {"　　"}背景色変更：
-        <input
+        <p>
+          背景色変更：
+          <input
             type="color"
             value={bgColor}
             onChange={(e) => setBgColor(e.target.value)}
-        />
+          />
+        </p>
         </label>
         </p>
 
@@ -635,7 +608,7 @@ useEffect(() => {
             >
             カード更新
             </button>
-            <button onClick={onBack} className="back-button">一人回しへ戻る</button>
+            <button onClick={()=>setPage("solo")}>一人回しへ</button>
       {/* =========================
             検索
         ========================= */}

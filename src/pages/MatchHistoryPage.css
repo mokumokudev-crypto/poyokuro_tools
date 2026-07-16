@@ -1,0 +1,23 @@
+.select-btn{
+    background:#4f8cff;
+    color:white;
+
+    border:none;
+    border-radius:12px;
+
+    padding:10px 18px;
+
+    font-weight:bold;
+
+    box-shadow:0 4px 12px rgba(79,140,255,.35);
+}
+
+.select-btn:hover{
+    background:#2f6dff;
+}
+
+.preset-btn{
+    background:#7b61ff;
+    color:white;
+}
+
