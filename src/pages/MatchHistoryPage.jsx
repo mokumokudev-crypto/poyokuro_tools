@@ -790,10 +790,10 @@ const text = lines.join("\n");
         <button onClick={saveHistory}>
           保存
         </button>
-
+{/*
         <button>
           サーバーへ反映
-        </button>
+        </button>*/}
       </section>
 
       {/* 履歴一覧 */}
